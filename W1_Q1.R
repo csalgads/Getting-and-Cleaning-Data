@@ -33,6 +33,7 @@ properties_worth_1000000 <- length(properties_worth)
    ##  sum(dat$Zip*dat$Ext,na.rm=T)
 ## (original data source: http://catalog.data.gov/dataset/natural-gas-acquisition-program)
 
+fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FDATA.gov_NGAP.xlsx"
 ## a) Download the file 
 download.file(fileUrl,destfile = "question3.xlsx",mode = 'wb')
 ## b) Load xlsx library
@@ -45,5 +46,42 @@ dat <- read.xlsx("question3.xlsx",sheetIndex = 1,rowIndex = rowIndex_1,colIndex
                  = colIndex_1)
 ## e) Execute the operation sum(dat$Zip*dat$Ext,na.rm=T) 
 sum(dat$Zip*dat$Ext,na.rm=T)
+
+## Question 4
+
+## Read the XML data on Baltimore restaurants from here:
+     
+   ##  https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Frestaurants.xml
+
+## How many restaurants have zipcode 21231?
+
+## a) Load XML library
+library(XML)
+## b) Create file conection
+fileUrl <- "http://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Frestaurants.xml"
+## c) Read the file into R
+doc <- xmlTreeParse(fileUrl,useInternal = TRUE)
+
+
+     ## -----------------------------------------------------------------------------------
+     ## In case this do not work, Try:
+     ## a.1)  Load RCurl and XML packages
+     library(RCurl)
+     library(XML)
+     ## b.1) Create file conection
+     temp <- getURL("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Frestaurants.xml")
+     ## c.1) Read the file into R
+     doc <- xmlTreeParse(temp, useInternalNodes = TRUE)
+     ## -----------------------------------------------------------------------------------
+
+
+## d) Create the root node 
+rootNode <- xmlRoot(doc)
+## e) Create a vector with the zip codes values
+zip <- xpathSApply(rootNode,"//zipcode",xmlValue)
+## f) Filter the vector identifying the restaurants with zip code 21231
+zip_21231 <- zip[zip =="21231"]
+## g) Count the number of restaurants with zip code 21231
+length(zip_21231)
 
 
