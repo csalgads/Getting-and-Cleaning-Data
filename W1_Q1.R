@@ -84,4 +84,31 @@ zip_21231 <- zip[zip =="21231"]
 ## g) Count the number of restaurants with zip code 21231
 length(zip_21231)
 
+## Question 5
+
+## The American Community Survey distributes downloadable data about United States 
+## communities. Download the 2006 microdata survey about housing for the state of 
+## Idaho using download.file() from here:
+     
+   ##  https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv
+
+## using the fread() command load the data into an R object
+     ## DT
+## The following are ways to calculate the average value of the variable
+     ## pwgtp15
+## broken down by sex. Using the data.table package, which will deliver the fastest 
+## user time?
+
+## a) Load data.table package
+library(data.table)
+## b) Create file conection
+fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv"
+## c) Download the file
+download.file(fileUrl,destfile = "question5.csv")
+## d) Read the file into R using fread from data.table package
+DT <- fread("question5.csv")
+## e)  
+DT[,mean(pwgtp15),by=SEX]
+
+
 
